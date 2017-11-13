@@ -1,0 +1,82 @@
+/******************************************************************************
+* Author: dmike16
+* Email : <cipmiky@gmail.com>
+* Date  : 12 Nov 2017
+*
+* <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+* Build configuration for a
+* custom gradle plugin
+* implementation.
+* project_tree :
+*       src$
+*          main$
+*              groovy$
+*              resources$
+*          test$
+*              groovy$
+*******************************************************************************/
+plugins{
+  id 'groovy'
+  id 'maven-publish'
+  id 'idea'
+}
+group = gup
+version = ver
+/******************************************************************************
+* Plugin standalone project dependecies
+******************************************************************************/
+configurations.all{
+  resolutionStrategy{
+    //Override default behavior so that the build fail on version conflit
+    failOnVersionConflict()
+  }
+}
+repositories{
+  mavenCentral()
+}
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile group: 'org.jboss.as', name: 'jboss-as-controller-client', version: '7.5.17.Final-redhat-4'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+/*******************************************************************************
+ * jar name with no version
+ */
+jar{
+  archiveName "${project.name}.jar"
+}
+/******************************************************************************
+* Maven publication
+* <<<<<<<<<<<<<<<<<<<
+* A publication must
+* be added to the set
+* of publications.
+* Commands:
+*  #remote: gradle publish
+*  #local : gradle publishToMavenLocal
+*******************************************************************************/
+publishing{
+  publications{
+    pluginImpl(MavenPublication){
+      from components.java
+      pom.withXml {
+        asNode().appendNode('description','Gradle plugin to deploy on wildfly/jboss server')
+      }
+    }
+    /* Add repo to publish
+    repositories{
+      maven{
+        url "$repo"
+      }
+    }*/
+  }
+}
+/******************************************************************************
+* Standard gradle wrapper task that download the gradlew script, so that everyone
+* that clone the repo can build the project without having the gradle binary
+* files.
+*******************************************************************************/
+task wrapper(type: Wrapper){
+  gradleVersion = '2.0'
+}
