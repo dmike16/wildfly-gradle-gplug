@@ -1,0 +1,24 @@
+/**
+Integration test sourceSet
+ */
+ sourceSets {
+     integrationTest {
+         groovy.srcDir file('src/test/integration/groovy')
+         resources.srcDr file('src/test/integration/resources')
+         compileClasspath += sourceSets.main.output + confiurations.testRuntime
+         runtimeClasspath += output + compileClasspath
+     }
+ }
+
+ /**
+ Test integration task
+  */
+  task integrationTest(type: Test){
+      description = 'Run integration tests'
+      group = 'verification'
+      testClassesDirs = sourceSets.integrationTest.output.classesDirs
+      classpath = sourceSets.integrationTest.runtimeClasspath
+      mustRunAfter test
+  }
+
+  check.dependsOn integrationTest

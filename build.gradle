@@ -18,7 +18,11 @@
 plugins{
   id 'java-gradle-plugin'
   id 'maven-publish'
+  id 'groovy'
 }
+apply from: "$rootDir/gradle/integration-test.gradle"
+apply from: "$rootDir/gradle/functional-test.gradle"
+
 group = pack
 version = state
 /******************************************************************************
@@ -32,7 +36,7 @@ configurations.all{
 }
 
 repositories{
-  mavenCentral()
+  jcenter()
 }
 
 dependencies {
@@ -40,7 +44,9 @@ dependencies {
       exclude group: 'org.jboss.logging', module: 'jboss-logging'
     }
     implementation group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile ('org.spockframework:spock-core:1.1-groovy-2.4') {
+        exclude group: 'org.codehaus.groovy'
+    }
 }
 /*******************************************************************************
  * jar name with no version

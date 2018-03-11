@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Add
+ - add integration and functional configuration
  - gradle build files
  - project directory tree
  - gradle wrapper script

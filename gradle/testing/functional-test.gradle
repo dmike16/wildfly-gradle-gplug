@@ -1,0 +1,27 @@
+/**
+Functional test source sets
+ */
+ sourceSets {
+     functionalTest {
+         groovy.srcDir file('src/test/functional/groovy')
+         resources.srcDr file('src/test/functional/resources')
+         compileClasspath += sourceSets.main.output + confiurations.testRuntime
+         runtimeClasspath += output + compileClasspath
+     }
+ }
+/**
+Task functional test
+ */
+task functionalTest(type: Test){
+    description = 'Run functional tests'
+    group = 'verification'
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+    mustRunAfter test, integrationTest
+}
+
+check.dependsOn functionalTest
+
+gradlePlugin {
+    testSourceSets sourceSets.functionalTest
+}
