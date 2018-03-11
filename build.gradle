@@ -16,12 +16,11 @@
 *              groovy$
 *******************************************************************************/
 plugins{
-  id 'groovy'
+  id 'java-gradle-plugin'
   id 'maven-publish'
-  id 'idea'
 }
-group = gup
-version = ver
+group = pack
+version = state
 /******************************************************************************
 * Plugin standalone project dependecies
 ******************************************************************************/
@@ -31,13 +30,16 @@ configurations.all{
     failOnVersionConflict()
   }
 }
+
 repositories{
   mavenCentral()
 }
+
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    compile group: 'org.jboss.as', name: 'jboss-as-controller-client', version: '7.5.17.Final-redhat-4'
+    implementation ('org.jboss.as:jboss-as-controller-client:7.2.0.Final'){
+      exclude group: 'org.jboss.logging', module: 'jboss-logging'
+    }
+    implementation group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 /*******************************************************************************
@@ -45,6 +47,23 @@ dependencies {
  */
 jar{
   archiveName "${project.name}.jar"
+}
+/******************************************************************************
+* Define plugin id and prop file in META-INFO/gradle-plugins
+******************************************************************************/
+gradlePlugin{
+  plugins{
+    wildflyBase{
+      id = 'com.github.dmike16.cplug.wildfly-base'
+      implementationClass = 'com.github.dmike16.cplug.WildflyBasePlugin'
+    }
+  }
+  plugins{
+    wildfly{
+      id = 'com.github.dmike16.cplug.wildfly'
+      implementationClass = 'com.github.dmike16.cplug.WildflyPlugin'
+    }
+  }
 }
 /******************************************************************************
 * Maven publication
@@ -78,5 +97,5 @@ publishing{
 * files.
 *******************************************************************************/
 task wrapper(type: Wrapper){
-  gradleVersion = '2.0'
+  gradleVersion = '4.5.1'
 }
