@@ -4,8 +4,8 @@ Integration test sourceSet
  sourceSets {
      integrationTest {
          groovy.srcDir file('src/test/integration/groovy')
-         resources.srcDr file('src/test/integration/resources')
-         compileClasspath += sourceSets.main.output + confiurations.testRuntime
+         resources.srcDir file('src/test/integration/resources')
+         compileClasspath += sourceSets.main.output + configurations.testRuntime
          runtimeClasspath += output + compileClasspath
      }
  }

@@ -4,8 +4,8 @@ Functional test source sets
  sourceSets {
      functionalTest {
          groovy.srcDir file('src/test/functional/groovy')
-         resources.srcDr file('src/test/functional/resources')
-         compileClasspath += sourceSets.main.output + confiurations.testRuntime
+         resources.srcDir file('src/test/functional/resources')
+         compileClasspath += sourceSets.main.output + configurations.testRuntime
          runtimeClasspath += output + compileClasspath
      }
  }

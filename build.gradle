@@ -20,8 +20,8 @@ plugins{
   id 'maven-publish'
   id 'groovy'
 }
-apply from: "$rootDir/gradle/integration-test.gradle"
-apply from: "$rootDir/gradle/functional-test.gradle"
+apply from: "$rootDir/gradle/testing/integration-test.gradle"
+apply from: "$rootDir/gradle/testing/functional-test.gradle"
 
 group = pack
 version = state
