@@ -1,4 +1,4 @@
-package com.github.dmike16.cplug.tasks;
+package com.github.dmike.cplug.tasks;
 
 import org.gradle.api.DefaultTask;
 

@@ -1,4 +1,4 @@
-package com.github.dmike16.cplug;
+package com.github.dmike.cplug;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

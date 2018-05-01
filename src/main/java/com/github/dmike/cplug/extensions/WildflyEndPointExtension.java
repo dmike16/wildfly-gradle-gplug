@@ -1,4 +1,4 @@
-package com.github.dmike16.cplug.extensions;
+package com.github.dmike.cplug.extensions;
 
 public class WildflyEndPointExtension{
     // TODO 

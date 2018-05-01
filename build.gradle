@@ -49,10 +49,27 @@ dependencies {
     }
 }
 /*******************************************************************************
+Compile java task to support java 9 module
+*/
+compileJava {
+  inputs.property("moduleName", moduleName)
+  doFirst {
+    options.compilerArgs = [
+      '--module-path', classpath.asPath,
+   ]
+    classpath = files() 
+  }
+}
+
+/*******************************************************************************
  * jar name with no version
  */
 jar{
+  inputs.property("moduleName", moduleName)
   archiveName "${project.name}.jar"
+  manifest {
+    attributes('Automatic-Module-Name': moduleName)
+  }
 }
 /******************************************************************************
 * Define plugin id and prop file in META-INFO/gradle-plugins
@@ -60,14 +77,14 @@ jar{
 gradlePlugin{
   plugins{
     wildflyBase{
-      id = 'com.github.dmike16.cplug.wildfly-base'
-      implementationClass = 'com.github.dmike16.cplug.WildflyBasePlugin'
+      id = 'com.github.dmike.cplug.wildfly-base'
+      implementationClass = 'com.github.dmike.cplug.WildflyBasePlugin'
     }
   }
   plugins{
     wildfly{
-      id = 'com.github.dmike16.cplug.wildfly'
-      implementationClass = 'com.github.dmike16.cplug.WildflyPlugin'
+      id = 'com.github.dmike.cplug.wildfly'
+      implementationClass = 'com.github.dmike.cplug.WildflyPlugin'
     }
   }
 }
@@ -103,5 +120,5 @@ publishing{
 * files.
 *******************************************************************************/
 task wrapper(type: Wrapper){
-  gradleVersion = '4.5.1'
+  gradleVersion = '4.7'
 }
