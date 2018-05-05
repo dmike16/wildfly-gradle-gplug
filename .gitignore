@@ -18,6 +18,7 @@ gradle-app.setting
 *.ipr
 *.iws
 *.iml
+.idea/
 
 #MacOs
 .DS_Store
